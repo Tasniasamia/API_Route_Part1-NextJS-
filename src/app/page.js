@@ -1,95 +1,70 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client"
+import { useState } from 'react';
 
 export default function Home() {
+  const [name, setName] = useState(''); // Initialize with an empty string
+  const [email, setEmail] = useState(''); // Initialize with an empty string
+  const [number, setNumber] = useState(''); // Initialize with an empty string
+
+  function handleSubmit(event) {
+    event.preventDefault(); // Prevent the default form submission behavior (page refresh)
+    
+    // No need to get values from event.target, use the state variables
+    console.log(name, email, number);
+
+    // Call postdata function to make the POST request here
+    postdata();
+  }
+
+  async function postdata() {
+    const response = await fetch('http://localhost:3000/postApi/post', {
+      method: 'POST',
+      body: JSON.stringify({ name: name, email: email, number: number })
+    });
+    const data = await response.json();
+    if (data.success) {
+      console.log('This is JSON Data');
+    }
+  }
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
+    <div>
+      <form onSubmit={handleSubmit}>
         <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+          <span style={{ marginRight: '13px' }}>Name</span>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Enter your Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)} // Update the 'name' state
+          />
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+        <div>
+          <span style={{ marginRight: '13px' }}>Email</span>
+          <input
+            type="text"
+            name="email"
+            id="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)} // Update the 'email' state
+          />
+        </div>
+        <div>
+          <span style={{ marginRight: '13px' }}>Number</span>
+          <input
+            type="text"
+            name="number"
+            id="number"
+            placeholder="Enter your number"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)} // Update the 'number' state
+          />
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
 }
