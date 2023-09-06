@@ -7,3 +7,12 @@ export function GET(req,res){
 
     return NextResponse.json(filterdata,{status:200})
 }
+
+export async function PUT(request,content){
+    const data=request.json();
+    const id=content.params.id;
+    if(data && id){
+        console.log(data + " "+id);
+    }
+    return NextResponse.json({success:true},{status:200})
+}

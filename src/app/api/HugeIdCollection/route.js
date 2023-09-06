@@ -4,3 +4,4 @@ export function GET(){
 
     return NextResponse.json(UserData,{status:200})
 }
+
