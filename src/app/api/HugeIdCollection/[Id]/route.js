@@ -9,10 +9,17 @@ export function GET(req,res){
 }
 
 export async function PUT(request,content){
-    const data=request.json();
-    const id=content.params.id;
-    if(data && id){
-        console.log(data + " "+id);
-    }
+    const data=await request.json();
+    const id=content.params.Id;
+        console.log("Updates",data ,id);
+    
     return NextResponse.json({success:true},{status:200})
+}
+
+export async function DELETE(request,content){
+    const id =content.params.Id;
+    if(id){
+        console.log("Delete Id", id);
+    }
+    return NextResponse.json({result:"True ! Data Deleted"},{status:200})
 }

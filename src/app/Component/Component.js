@@ -10,7 +10,14 @@ const Component = () => {
             .then((res) => res.json())
             .then((data) => setData(data));
     }, []);
+const deleteId=(id)=>{
+    fetch(`http://localhost:3000/api/HugeIdCollection/${id}`,{
+        method:"DELETE"
 
+}).then(res=>res.json())
+.then(data=>{console.log(data)})
+
+}
     return (
         <div>
             {data.map((index) => (
@@ -18,6 +25,7 @@ const Component = () => {
                     <div>{index.HadisBookName}</div>
                     <div>{index.Reference}</div>
                     <Link href={`/Users/${index.id}/Update`}>Edit</Link>
+                    <button onClick={()=>{deleteId(index.id)}}>Delete</button>
                 </div>
             ))}
         </div>
